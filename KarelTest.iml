@@ -10,12 +10,10 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../libs/shpp-karel-lib.jar!/" />
+          <root url="jar://$MODULE_DIR$/shpp-karel-lib.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../libs/shpp-karel-lib.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
