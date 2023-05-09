@@ -23,7 +23,7 @@ package com.shpp.p2p.cs.ivasyliev.assignment1;
  *      інакше ж потрібно покласти в одну з двох центральних осередків;
  * - Не важливо, куди дивиться Карел після того, як він закінчить свій забіг.
  */
-public class Assignment1Part3 extends KarelCalculater {
+public class Assignment1Part3 extends VassBassKarel {
 
     /**
      * IMPORTANT!
