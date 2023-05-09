@@ -18,7 +18,6 @@ public class Assignment1Part4 extends VassBassKarel {
 
     @Override
     public void run() throws Exception {
-        moveToStartCell();
         // Karel puts the beeper to the first cell
         putBeeper();
         // Then he's trying to do next step
@@ -27,30 +26,24 @@ public class Assignment1Part4 extends VassBassKarel {
     }
 
     /**
-     * Karel moves to cell in south-west and turns to east
+     * Karel checks is front is clear.
+     * If front is clear, he's doing {@link #step()} and then repeats this action.
+     * Otherwise, he checks that are next row is exist.
+     * If next row is exists he's going to the next row and repeats this action.
+     * If next row is NOT exists - mission is complete!
+     *
+     * @see #step()
+     * @see #goToNextRow()
      */
-    public void moveToStartCell() throws Exception {
-        turnToWest();
-        while (frontIsClear()) move();
-        turnLeft();
-        while (frontIsClear()) move();
-        turnLeft();
-    }
-
-    public void tryToStep() throws Exception {
-        // Check if Karel can go forward
+    private void tryToStep() throws Exception {
         if (frontIsClear()) {
-            // If he can - he's doing a step and repeats this action
             step();
             tryToStep();
         } else {
-            // If he can't - he checks that are next row is exist
             if ((facingEast() && leftIsClear()) || (facingWest() && rightIsClear())) {
-                // If exist - he's going to the next row and repeats this action
                 goToNextRow();
                 tryToStep();
             }
-            // If the next row does not exist - the mission is complete!
         }
     }
 
@@ -60,7 +53,7 @@ public class Assignment1Part4 extends VassBassKarel {
      * otherwise - only moves forward.
      * @throws Exception if Kernel hits a wall (try not to do this, it hurts)
      */
-    public void step() throws Exception {
+    private void step() throws Exception {
         if (beepersPresent()) {
             move();
         } else {
@@ -75,7 +68,7 @@ public class Assignment1Part4 extends VassBassKarel {
      * otherwise - only moves to the next row.
      * @throws Exception if Kernel hits a wall (try not to do this, it hurts)
      */
-    public void goToNextRow() throws Exception {
+    private void goToNextRow() throws Exception {
         if (facingEast()) {
             turnLeft();
             step();

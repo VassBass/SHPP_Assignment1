@@ -24,21 +24,19 @@ public class Assignment1Part2 extends VassBassKarel {
 
     @Override
     public void run() throws Exception {
-        turnToEast();
+        //Karel builds the first column, then tries to move on to the next one
         buildColumn();
         while (frontIsClear()) {
             for (int s = 0; s < 4; s++) move();
             buildColumn();
         }
-        goBack();
-        say("Boooo-bep! Boooo-boop!");
     }
 
     /**
      * Makes Karel build a column until he hits the wall.
      * Then he returns to the base of the column.
      */
-    public void buildColumn() throws Exception {
+    private void buildColumn() throws Exception {
         turnLeft();
         putBeeperAndMove();
     }
@@ -49,7 +47,7 @@ public class Assignment1Part2 extends VassBassKarel {
      * Then he looks forward and if he does not see the wall, he moves one cell and repeats this action,
      * otherwise he goes to the base of column
      */
-    public void putBeeperAndMove() throws Exception {
+    private void putBeeperAndMove() throws Exception {
         if (noBeepersPresent()) putBeeper();
         if (frontIsClear()) {
             move();
@@ -63,7 +61,7 @@ public class Assignment1Part2 extends VassBassKarel {
      * Karel turns around and moves forward until he hits the wall.
      * Then he turns left.
      */
-    public void goBack() throws Exception {
+    private void goBack() throws Exception {
         turnAround();
         while (frontIsClear()) move();
         turnLeft();

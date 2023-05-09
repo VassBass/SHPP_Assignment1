@@ -23,107 +23,83 @@ package com.shpp.p2p.cs.ivasyliev.assignment1;
  *      інакше ж потрібно покласти в одну з двох центральних осередків;
  * - Не важливо, куди дивиться Карел після того, як він закінчить свій забіг.
  */
-public class Assignment1Part3 extends VassBassKarel {
+public class Assignment1Part3 extends KarelCalculater {
 
+    /**
+     * IMPORTANT!
+     * If your world width is > 22 set actions_limit > 1000
+     * If your world width is > 33 set actions_limit > 2000
+     * I tested this Karel in world with max width 33 cells.
+     *
+     *  Karel first puts a beeper, then checks if the front is clear.
+     *  If it's clear, he moves one cell and doing method "step".
+     *
+     * @see #step()
+     */
     @Override
     public void run() throws Exception {
-        //moveToStartPoint();
-
         putBeeper();
         if (frontIsClear()) {
             move();
-//            altStep();
             step();
         }
-
-        //say("Beep-boop-boop-beeeeeee!");
     }
 
-    public void step() throws Exception {
+    /**
+     * Karel checks if beeper is present in cell where he stands.
+     * If beeper is present, he narrows the path between beepers.
+     * Otherwise, he tries to go next.
+     */
+    private void step() throws Exception {
         if (beepersPresent()) {
+            searchNarrowing();
+        } else {
+            searchTheEnd();
+        }
+    }
+
+    /**
+     * Karel turns around and checks is front is clear.
+     * If front is NOT clear - mission is complete!
+     * If front is clear, he picks beeper, moves one cell and checks if beeper is present.
+     * If beeper is NOT present, he puts beeper, tries to move front and repeat method "step",
+     * otherwise - he is in the middle.
+     *
+     * @see #step()
+     */
+    private void searchNarrowing() throws Exception {
+        turnAround();
+        if (frontIsClear()) {
             pickBeeper();
+            move();
+            if (noBeepersPresent()) {
+                putBeeper();
+                if (frontIsClear()) move();
+                step();
+            }
+        }
+    }
+
+    /**
+     * Karel checks is front is clear.
+     * If front is clear, he moves one cell and repeat method "step".
+     * If front is NOT clear, he puts beeper, turns around and check is front is clear now.
+     * If front is NOT clear - mission is complete!
+     * Otherwise, he moves one cell and repeat method "step"
+     *
+     * @see #step()
+     */
+    private void searchTheEnd() throws Exception {
+        if (frontIsClear()) {
+            move();
+            step();
+        } else {
+            putBeeper();
             turnAround();
             if (frontIsClear()) {
                 move();
-                if (noBeepersPresent()) {
-                    putBeeper();
-                    if (frontIsClear()) move();
-                    step();
-                }
-            } else {
-                putBeeper();
-            }
-        } else {
-            if (frontIsClear()) {
-                move();
                 step();
-            } else {
-                putBeeper();
-                turnAround();
-                if (frontIsClear()) {
-                    move();
-                    step();
-                }
             }
         }
-    }
-
-    public void altStep() throws Exception {
-        if (frontIsClear()) {
-            if (noBeepersPresent()) {
-                move();
-                altStep();
-            } else {
-                turnLeft();
-                if (leftIsClear()) {
-                    turnLeft();
-                    pickBeeper();
-                    move();
-                    if (noBeepersPresent()){
-                        putBeeper();
-                        if (frontIsClear()) {
-                            move();
-                            altStep();
-                        }
-                    }
-                }
-            }
-        } else {
-            if (noBeepersPresent()) {
-                turnLeft();
-                if (leftIsClear()) {
-                    turnLeft();
-                    putBeeper();
-                    move();
-                    if (noBeepersPresent()) {
-                        altStep();
-                    } else {
-                        pickBeeper();
-                    }
-                }
-            } else {
-                turnLeft();
-                if (leftIsClear()) {
-                    turnLeft();
-                    pickBeeper();
-                    move();
-                    if (noBeepersPresent()) {
-                        putBeeper();
-                        if (frontIsClear()) {
-                            move();
-                            altStep();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void moveToStartPoint() throws Exception {
-        turnToWest();
-        while (frontIsClear()) move();
-        turnLeft();
-        while (frontIsClear()) move();
-        turnLeft();
     }
 }

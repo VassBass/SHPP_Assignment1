@@ -35,7 +35,7 @@ public class Assignment1Part1 extends VassBassKarel {
      * The direction of the passage depends on the direction of Karel's gaze.
      * @throws Exception if Kernel hits a wall (try not to do this, it hurts)
      */
-    public void goPath() throws Exception {
+    private void goPath() throws Exception {
         for (int s = 0; s < 2; s++) move();
         turnRight();
         move();
@@ -46,7 +46,7 @@ public class Assignment1Part1 extends VassBassKarel {
     /**
      * What are you saying Karel? Nothing is clear but very interesting.
      */
-    public void pickBeeperAndTurnBack() throws Exception {
+    private void pickBeeperAndTurnBack() throws Exception {
         say("Bee-boo-boo-bep-bee-bee-boo.");
         if (beepersPresent()) pickBeeper();
         turnAround();
